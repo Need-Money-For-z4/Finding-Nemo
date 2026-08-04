@@ -6,6 +6,3 @@ Project Words: Fish, Plane, Dodge
 Project Scenario: Fish is on a single plane where it dodges obstacles in the ocean
 
 
-
-# TODO
-- [  ] test
