@@ -1,4 +1,4 @@
-int gameState = 1;          // 0 = ready, 1 = playing, 2 = game over
+int gameState = 0;          // 0 = ready, 1 = playing, 2 = game over
 float floorY;               // y of the ocean floor
 float speed;                // scroll speed
 int   score, highScore = 0;
