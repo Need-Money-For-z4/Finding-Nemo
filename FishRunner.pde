@@ -73,17 +73,17 @@ void draw() {
 // -------------------------------------------------------------------
 void keyPressed() {
   if (key == ' ' || (key == CODED && keyCode == UP)) {
-    if (gameState == 1) fish.jump();
+    if (gameState == 1) fish.jump();        // designates a jump function
     else startGame();
   }
   if (key == CODED && keyCode == DOWN && gameState == 1) {
-    fish.ducking = true;
+    fish.ducking = true;                   // designates a crouch or duck action
   }
 }
 
 void keyReleased() {
-  if (key == CODED && keyCode == DOWN) fish.ducking = false;
-}
+  if (key == CODED && keyCode == DOWN) fish.ducking = false; 
+}                                         // designates the uncrouching
 
 // ===================================================================
 //  FISH
@@ -124,7 +124,7 @@ class Fish {
 
     // tail
     fill(255, 110, 40);
-    triangle(-20, 0, -36, -13 + wig, -36, 13 + wig);
+    triangle(-20, 0, -36, -13 + wig, -36, 13 + wig);    //this creates the full fish.
     // body
     fill(255, 140, 60);
     ellipse(0, 0, 48, 30);
