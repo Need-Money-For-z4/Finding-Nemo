@@ -7,6 +7,8 @@
 //  friends" loop.
 //
 //  OWNER: [persistence and progression]
+//Because the file is tied to the local machine
+// rather than to an individual player account or an
 // =====================================================================
 
 // One row of the board.
@@ -92,6 +94,9 @@ class Leaderboard {
 
   // A few starting targets, so a first-time player has something to beat
   // instead of an empty table.
+
+  // A few starting targets, so a first-time player has something to beat
+  // instead of an empty table.
   void seed() {
     entries.add(new ScoreEntry("ACE", 9200, rankTitle(9200)));
     entries.add(new ScoreEntry("FIN", 6800, rankTitle(6800)));
@@ -116,7 +121,8 @@ class Leaderboard {
       println("Could not write leaderboard: " + e.getMessage());
     }
   }
-
+// Simple insertion sort. The list is at most ten long, so anything
+    // cleverer would be harder to read for no measurable gain.
   void sortAndTrim() {
     // Simple insertion sort. The list is at most ten long, so anything
     // cleverer would be harder to read for no measurable gain.
@@ -225,12 +231,12 @@ class Leaderboard {
       rect(cx - 268, y - rowH * 0.42, 536, rowH * 0.84, 6);
 
       color rowCol = isNew ? color(255, 226, 150) : color(228, 240, 248);
-
+//text
       textAlign(LEFT, CENTER);
       textSize(15);
       fill(150, 196, 220, 200);
       text(nf(i + 1, 2), cx - 250, y);
-
+//text
       textFont(fontNum);
       textSize(18);
       fill(rowCol);
