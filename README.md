@@ -43,8 +43,8 @@ No external libraries, no image or font assets. Everything is drawn in code, so 
 
 | | Effect | Cost |
 |---|---|---|
-| ❤️ Extra Life | +1 life, capped at 5 | At the cap it converts to 500 points instead |
-| ⏳ Slow-Mo | The entire world runs at 0.5× for 7s | Scoring slows too — you buy safety with points |
+| ❤️ Extra Life | +1 life, capped at 5 | At the cap it converts to 1000 points instead |
+| ⏳ Slow-Mo | The entire world runs at 0.5× for 10s | Scoring slows too — you buy safety with points |
 | ✕2 Double Points | Every point counts twice for 10s | You have to swim to it through the freight |
 
 Re-collecting refreshes a timer rather than stacking it, so you can't bank a minute of slow motion.
