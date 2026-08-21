@@ -57,8 +57,11 @@ class PowerUp {
   // the HUD timer bar, so the player learns one colour per ability.
   color tint() {
     if (kind == PU_LIFE) return color(255, 96, 116);
+ // Displays a red/pink colour
     if (kind == PU_SLOW) return color(120, 210, 255);
+ // Displays a light blue colour
     return color(255, 206, 84);
+ // returns the colour to yellow/gold
   }
 
   String label() {
