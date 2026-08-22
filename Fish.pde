@@ -71,60 +71,87 @@ class  Fish {
     y += sin(frameCount * 0.04) * 0.42 * dt;
     squash = lerp(squash, 0, 0.1);
   }
+void update() { 
 
-  void update() {
-    tailPhase += (0.18 + mag(vx, vy) * 0.055) * dt;
-    if (invulnFrames > 0) invulnFrames -= dt;
+  // ---- read input ------------------------------------------------ 
 
-    if (dead) {
-      // Belly-up drift toward the surface.
-      deathRoll = min(PI, deathRoll + 0.09 * dt);
-      y -= 1.4 * dt;
-      y = max(SURFACE_Y + 16, y);
-      return;
-    }
+  float ax = 0, ay = 0;              // acceleration requested this frame 
 
-    // ---- read input -------------------------------------------------
-    float ax = 0, ay = 0;
-    if (held(LEFT,  'A')) ax -= ACCEL;
-    if (held(RIGHT, 'D')) ax += ACCEL;
-    if (held(UP,    'W')) ay -= ACCEL;
-    if (held(DOWN,  'S')) ay += ACCEL;
+  // held() checks the key table, so both layouts drive the same code 
 
-    // Normalise diagonals, otherwise moving at 45 degrees is 1.41x faster
-    // than moving straight -- a classic bug that makes corner-running the
-    // dominant strategy.
-    if (ax != 0 && ay != 0) {
-      ax *= 0.7071;
-      ay *= 0.7071;
-    }
+  if (held(LEFT,  'A')) ax -= ACCEL;   // push left 
 
-    vx += ax * dt;
-    vy += ay * dt;
+  if (held(RIGHT, 'D')) ax += ACCEL;   // push right 
 
-    // ---- drag and speed cap ----------------------------------------
-    vx *= pow(DRAG, dt);
-    vy *= pow(DRAG, dt);
+  if (held(UP,    'W')) ay -= ACCEL;   // push up (y grows downward) 
 
-    float sp = mag(vx, vy);
-    if (sp > MAX_SPEED) {
-      vx = vx / sp * MAX_SPEED;
-      vy = vy / sp * MAX_SPEED;
-    }
+  if (held(DOWN,  'S')) ay += ACCEL;   // push down 
 
-    x += vx * dt;
-    y += vy * dt;
+  
 
-    // ---- keep the fish in the water ---------------------------------
-    // Bumping a wall kills the velocity into it, so the player never
-    // gets stuck grinding along an edge.
-    float top    = SURFACE_Y + 18;
-    float bottom = SEABED_Y - 14;
-    if (x < r)          { x = r;          vx = 0; }
-    if (x > width - r)  { x = width - r;  vx = 0; }
-    if (y < top)        { y = top;        vy *= -0.25; }
-    if (y > bottom)     { y = bottom;     vy *= -0.25; }
+  // Normalise diagonals. Without this, holding two keys gives 1.41x 
 
+  // the speed of one, making corner-running the dominant strategy. 
+
+  if (ax != 0 && ay != 0) { 
+
+    ax *= 0.7071;                    // cos(45 degrees) 
+
+    ay *= 0.7071; 
+
+  } 
+
+  
+
+  vx += ax * dt;                     // acceleration feeds velocity, 
+
+  vy += ay * dt;                     // so the fish carries momentum 
+
+  
+
+  // ---- drag and speed cap ---------------------------------------- 
+
+  vx *= pow(DRAG, dt);               // bleed speed off each frame, so 
+
+  vy *= pow(DRAG, dt);               // releasing a key glides to a stop 
+
+  
+
+  float sp = mag(vx, vy);            // current speed, both axes combined 
+
+  if (sp > MAX_SPEED) {              // clamp to the agreed maximum 
+
+    vx = vx / sp * MAX_SPEED;        // scale both components equally so 
+
+    vy = vy / sp * MAX_SPEED;        // the direction of travel is kept 
+
+  } 
+
+  
+
+  x += vx * dt;                      // apply the frame’s movement 
+
+  y += vy * dt; 
+
+  
+
+  // ---- keep the fish inside the water ---------------------------- 
+
+  float top    = SURFACE_Y + 18;     // just under the waterline 
+
+  float bottom = SEABED_Y  - 14;     // just above the sand 
+
+  // Killing the velocity into a wall stops the player grinding an edge 
+
+  if (x < r)         { x = r;         vx = 0; } 
+
+  if (x > width - r) { x = width - r; vx = 0; } 
+
+  if (y < top)       { y = top;       vy *= -0.25; }  // soft bounce 
+
+  if (y > bottom)    { y = bottom;    vy *= -0.25; } 
+
+} 
     // ---- presentation ------------------------------------------------
     if (abs(vx) > 0.35) facing = (vx > 0) ? 1 : -1;
     squash = lerp(squash, constrain(sp / MAX_SPEED, 0, 1), 0.18);
