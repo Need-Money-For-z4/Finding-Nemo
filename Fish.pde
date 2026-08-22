@@ -9,7 +9,7 @@
 //  OWNER: [player character and movement]
 // =====================================================================
 
-class Fish {
+class  Fish {
 
   float x, y;
   float vx = 0, vy = 0;
